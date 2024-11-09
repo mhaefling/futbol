@@ -16,14 +16,6 @@ RSpec.describe GameStatable do
         @stat_tracker.extend(GameStatable)
     end
 
-    describe "#total_score" do
-        it 'returns the sum score of winning and lossing teams' do
-            game_data = @stat_tracker.games["2012030221"]
-
-            expect(@stat_tracker.total_score(game_data)).to eq(5)
-        end
-    end
-
     describe "#highest_total_score" do
         it 'returns highest total score of teams' do
             expect(@stat_tracker.highest_total_score).to eq(11)
@@ -36,34 +28,7 @@ RSpec.describe GameStatable do
         end
     end
 
-    describe "#total_game_count" do
-        it 'returns the total amount of games' do
-
-            expect(@stat_tracker.total_game_count).to eq(7441.0)
-        end
-    end
-
-    describe "#total_home_wins" do
-        it 'returns the total home game wins' do
-
-            expect(@stat_tracker.total_home_wins).to eq(3237.0)
-        end
-    end
-
-    describe "#total_visitor_wins" do
-        it 'returns the total away game wins' do
-
-            expect(@stat_tracker.total_visitor_wins).to eq(2687.0)
-        end
-    end
-
-    describe "#total_ties" do
-        it 'returns the total amount of tie games' do
-
-            expect(@stat_tracker.total_ties).to eq(1517.0)
-        end
-    end
-
+   
 
     describe '#percentage_home_wins' do
         it 'calculates the percentage of home wins' do
@@ -97,13 +62,6 @@ RSpec.describe GameStatable do
 
     end
 
-    describe "#total_goal" do
-        it 'provides the total amount of goals from all games and seasons' do
-
-            expect(@stat_tracker.total_goals).to eq(31413)
-        end 
-    end
-
     describe "#average_goals_per_game" do
         it 'Average number of goals scored in a game across all seasons including both home and away goals' do
 
@@ -128,6 +86,51 @@ RSpec.describe GameStatable do
                 "20172018"=>4.44
                 }
             expect(@stat_tracker.average_goals_by_season).to eq expected
+        end
+    end
+
+    ####### Helper Method Tests ########
+
+    describe "#total_goal" do
+        it 'provides the total amount of goals from all games and seasons' do
+
+            expect(@stat_tracker.total_goals).to eq(31413)
+        end 
+    end
+
+    describe "#total_score" do
+        it 'returns the sum score of winning and lossing teams' do
+            game_data = @stat_tracker.games["2012030221"]
+
+            expect(@stat_tracker.total_score(game_data)).to eq(5)
+        end
+    end
+
+    describe "#total_game_count" do
+        it 'returns the total amount of games' do
+
+            expect(@stat_tracker.total_game_count).to eq(7441.0)
+        end
+    end
+
+    describe "#total_home_wins" do
+    it 'returns the total home game wins' do
+
+        expect(@stat_tracker.total_home_wins).to eq(3237.0)
+    end
+    end
+
+    describe "#total_visitor_wins" do
+        it 'returns the total away game wins' do
+
+            expect(@stat_tracker.total_visitor_wins).to eq(2687.0)
+        end
+    end
+
+    describe "#total_ties" do
+        it 'returns the total amount of tie games' do
+
+            expect(@stat_tracker.total_ties).to eq(1517.0)
         end
     end
 end

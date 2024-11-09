@@ -16,6 +16,35 @@ RSpec.describe SeasonStatable do
         @stat_tracker.extend(GameStatable)
     end
 
+    describe "winnigest_coach" do
+        it "returns the head_coach with the most wins per that season" do
+            expect(@stat_tracker.winningest_coach("20132014")).to eq ("Claude Julien")
+            expect(@stat_tracker.winningest_coach("20142015")).to eq ("Alain Vigneault")
+        
+        end
+    end
+
+    describe "worst_coach" do
+        it "returns the head coach with the most losses per season" do
+        expect(@stat_tracker.worst_coach("20132014")).to eq ("Peter Laviolette")
+        expect(@stat_tracker.worst_coach("20142015")).to eq("Craig MacTavish").or(eq("Ted Nolan"))
+        end
+    end
+
+    describe "#most_accurate_team" do
+        it "#most_accurate_team" do
+            expect(@stat_tracker.most_accurate_team("20132014")).to eq "Real Salt Lake"
+            expect(@stat_tracker.most_accurate_team("20142015")).to eq "Toronto FC"
+        end
+    end
+
+    describe "#least_accurate_team" do
+        it "#least_accurate_team" do
+            expect(@stat_tracker.least_accurate_team("20132014")).to eq "New York City FC"
+            expect(@stat_tracker.least_accurate_team("20142015")).to eq "Columbus Crew SC"
+        end
+    end
+
     describe "#most_tackles" do
         it 'returns the team with the most tackles' do
             expect(@stat_tracker.most_tackles("20132014")).to eq "FC Cincinnati"
@@ -37,73 +66,9 @@ RSpec.describe SeasonStatable do
             # expect(@stat_tracker.fewest_tackles.to_i).to be > 0
         end
     end
-
-    describe "#games_by_season" do
-        it 'returns an array of game ids based on a season id' do
-            season = "20132014"
-            expect(@stat_tracker.games_by_season(season)).to be_a(Array)
-            expect(@stat_tracker.games_by_season(season)).to_not be_empty
-            expect(@stat_tracker.games_by_season(season)).to be_all(String)
-        end
-    end
-
-    describe "#team_season_shot_goals" do
-        it 'returns a hash of each teams total shots and goals for a given season' do
-            season_games = ["2013030161", "2013030162", "2013030163", "2013030164", "2013030165", "2013030166", "2013030151", "2013030152", "2013030153", "2013030154"]
-            expect(@stat_tracker.team_season_shot_goals(season_games)).to eq({"16"=>[16, 44], "19"=>[10, 52], "30"=>[7, 35], "21"=>[6, 22]})
-        end
-    end
-
-    describe "#team_ratios" do
-        it 'calculates shot to goal ratios per team' do
-            team_shot_goal_count = {"16"=>[16, 44], "19"=>[10, 52], "30"=>[7, 35], "21"=>[6, 22]}
-            expect(@stat_tracker.team_ratios(team_shot_goal_count)).to eq({"16"=>0.36363636363636365, "19"=>0.19230769230769232, "30"=>0.2, "21"=>0.2727272727272727})
-        end
-    end
-
-    describe "#best_ratio" do
-        it 'sorts team shot goals ratios by max value and returns the team_id with the best ratio' do
-            team_ratios = {"16"=>0.36363636363636365, "19"=>0.19230769230769232, "30"=>0.2, "21"=>0.2727272727272727}
-            expect(@stat_tracker.best_ratio(team_ratios)).to eq("16")
-        end
-    end
-
-    describe "#worst_ratio" do
-    it 'sorts team shot goals ratios by min value and returns the team_id with the worst ratio' do
-        team_ratios = {"16"=>0.36363636363636365, "19"=>0.19230769230769232, "30"=>0.2, "21"=>0.2727272727272727}
-        expect(@stat_tracker.worst_ratio(team_ratios)).to eq("19")
-    end
-end
-  
-    describe "#most_accurate_team" do
-        it "#most_accurate_team" do
-            expect(@stat_tracker.most_accurate_team("20132014")).to eq "Real Salt Lake"
-            expect(@stat_tracker.most_accurate_team("20142015")).to eq "Toronto FC"
-        end
-    end
-
-    describe "#least_accurate_team" do
-        it "#least_accurate_team" do
-            expect(@stat_tracker.least_accurate_team("20132014")).to eq "New York City FC"
-            expect(@stat_tracker.least_accurate_team("20142015")).to eq "Columbus Crew SC"
-        end
-    end
-
-
-    describe "winnigest_coach" do
-        it "returns the head_coach with the most wins per that season" do
-            expect(@stat_tracker.winningest_coach("20132014")).to eq ("Claude Julien")
-            expect(@stat_tracker.winningest_coach("20142015")).to eq ("Alain Vigneault")
-        
-        end
-    end
-
-    describe "worst_coach" do
-        it "returns the head coach with the most losses per season" do
-        expect(@stat_tracker.worst_coach("20132014")).to eq ("Peter Laviolette")
-        expect(@stat_tracker.worst_coach("20142015")).to eq("Craig MacTavish").or(eq("Ted Nolan"))
-        end
-    end
+   
+    
+    ###### Helper Method Tests ########
 
     describe "coach_wins_in_season" do
         it "returns number of wins for a coach in a season" do
@@ -129,4 +94,41 @@ end
             expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).values.sample).to be_a(Float)
         end
     end
+
+    describe "#team_season_shot_goals" do
+        it 'returns a hash of each teams total shots and goals for a given season' do
+            season_games = ["2013030161", "2013030162", "2013030163", "2013030164", "2013030165", "2013030166", "2013030151", "2013030152", "2013030153", "2013030154"]
+            expect(@stat_tracker.team_season_shot_goals(season_games)).to eq({"16"=>[16, 44], "19"=>[10, 52], "30"=>[7, 35], "21"=>[6, 22]})
+        end
+    end
+
+    describe "#team_ratios" do
+        it 'calculates shot to goal ratios per team' do
+            team_shot_goal_count = {"16"=>[16, 44], "19"=>[10, 52], "30"=>[7, 35], "21"=>[6, 22]}
+            expect(@stat_tracker.team_ratios(team_shot_goal_count)).to eq({"16"=>0.36363636363636365, "19"=>0.19230769230769232, "30"=>0.2, "21"=>0.2727272727272727})
+        end
+    end
+
+    describe "#best_ratio" do
+        it 'sorts team shot goals ratios by max value and returns the team_id with the best ratio' do
+            team_ratios = {"16"=>0.36363636363636365, "19"=>0.19230769230769232, "30"=>0.2, "21"=>0.2727272727272727}
+            expect(@stat_tracker.best_ratio(team_ratios)).to eq("16")
+        end
+    end
+
+    describe "#worst_ratio" do
+        it 'sorts team shot goals ratios by min value and returns the team_id with the worst ratio' do
+            team_ratios = {"16"=>0.36363636363636365, "19"=>0.19230769230769232, "30"=>0.2, "21"=>0.2727272727272727}
+            expect(@stat_tracker.worst_ratio(team_ratios)).to eq("19")
+        end
+    end
+
+    describe "#games_by_season" do
+        it 'returns an array of game ids based on a season id' do
+            season = "20132014"
+            expect(@stat_tracker.games_by_season(season)).to be_a(Array)
+            expect(@stat_tracker.games_by_season(season)).to_not be_empty
+            expect(@stat_tracker.games_by_season(season)).to be_all(String)
+        end
+    end 
 end

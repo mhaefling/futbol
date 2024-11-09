@@ -16,6 +16,13 @@ RSpec.describe LeagueStatable do
         @stat_tracker.extend(GameStatable)
     end
 
+    describe '#count_of_teams' do
+        it 'returns the count of teams from the game_teams.csv file' do
+            expect(@stat_tracker.count_of_teams).to eq 32
+
+        end
+    end
+
     describe "best_offense" do
         it "tells which team has the most goals per game for all games" do
             expect(@stat_tracker.best_offense).to eq("Reign FC")
@@ -26,7 +33,34 @@ RSpec.describe LeagueStatable do
         it "tells which team has the least goals per game for all season" do
             expect(@stat_tracker.worst_offense).to eq("Utah Royals FC")
         end
+    end
 
+    describe '#highest_scoring_visitor' do 
+        it "#highest_scoring_visitor" do
+            expect(@stat_tracker.highest_scoring_visitor).to eq "FC Dallas"
+        end
+    end
+
+    describe '#highest_scoring_home_team' do
+        it "#highest_scoring_home_team" do
+            expect(@stat_tracker.highest_scoring_home_team).to eq "Reign FC"
+        end
+    end
+
+    describe '#lowest_scoring_visitor' do
+        it 'returns lowest scoring visitor in league' do
+            expect(@stat_tracker.lowest_scoring_visitor).to eq("San Jose Earthquakes")
+        end
+    end
+
+    describe '#lowest_scoring_home_team' do
+        it 'returns lowest scoring visitor in league' do
+            expect(@stat_tracker.lowest_scoring_home_team).to eq("Utah Royals FC")
+        end
+    end
+
+
+    ####### Helper Method Tests ########
 
     # Returns the total number of games a team played either home or away
     describe '#total_games_per_team_hoa' do
@@ -96,37 +130,4 @@ RSpec.describe LeagueStatable do
             expect(@stat_tracker.lowest_scoring_hoa("home")).to eq("Utah Royals FC")
         end
     end
-
-    describe '#highest_scoring_visitor' do 
-        it "#highest_scoring_visitor" do
-            expect(@stat_tracker.highest_scoring_visitor).to eq "FC Dallas"
-        end
-    end
-
-    describe '#highest_scoring_home_team' do
-        it "#highest_scoring_home_team" do
-            expect(@stat_tracker.highest_scoring_home_team).to eq "Reign FC"
-        end
-    end
-
-    describe '#lowest_scoring_visitor' do
-        it 'returns lowest scoring visitor in league' do
-            expect(@stat_tracker.lowest_scoring_visitor).to eq("San Jose Earthquakes")
-        end
-    end
-
-    describe '#lowest_scoring_home_team' do
-        it 'returns lowest scoring visitor in league' do
-            expect(@stat_tracker.lowest_scoring_home_team).to eq("Utah Royals FC")
-        end
-    end
-
-
-    describe '#count_of_teams' do
-        it 'returns the count of teams from the game_teams.csv file' do
-            expect(@stat_tracker.count_of_teams).to eq 32
-
-        end
-    end
-end
 end

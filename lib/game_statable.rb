@@ -1,11 +1,5 @@
 module GameStatable
 
-    # Helper Method
-    ## Returns the sum of home and away teams' goals
-    def total_score(game_data)
-        return game_data.away_goals + game_data.home_goals
-    end
-
     # Iterates through games hash looking for the game with the highest totals
     # returned from inject game data into total_score helper method 
     # and then returns the highest number of scores of a game
@@ -26,46 +20,6 @@ module GameStatable
         total_score(lowest_total_score[1])
     end 
 
-    # Counts all of the keys in the game_teams hash and divides them by 2
-    # Divides them by two because each game is entered twice with the team id 
-    # concatenated to the end of the game_id
-    # => Integer: 7441
-    def total_game_count
-        @game_teams.count / 2
-    end
-
-    # Counts all the key values in the game_teams hash comparing the hoa value to confirm
-    # it was a home game, and the result value to confirm it was a win and then converts the total
-    # count to a float.
-    # => Float: 3237.0
-    def total_home_wins
-        home_games = @game_teams.count do |game|
-            game[1].hoa == "home" && game[1].result == "WIN"
-        end.to_f
-    end
-
-    # Counts all the key values in the game_teams hash comparing the hoa value to confirm
-    # it was a away game, and the result value to confirm it was a win and then converts the total
-    # count to a float.
-    # => Float: 2687.0
-    def total_visitor_wins
-        visitor_games = @game_teams.count do |game|
-            game[1].hoa == "away" && game[1].result == "WIN"
-        end.to_f
-    end
-
-    # Counts all the key values in the game_teams hash confirming that the result value is a tie.
-    # Divides the total by two because each game is entered twice with the team id 
-    # concatenated to the end of the game_id
-    # => Float: 1517.0
-    def total_ties
-        ties = @game_teams.count do |game|
-            game[1].result == "TIE"
-        end.to_f
-        ties /= 2
-    end
-
-    
     # Determines the percent of home wins by taking the result of the total_home_wins method (3237.0)
     # and dividing it by the result of the total_game_count method (7441) and then rounding the return
     # value down to 2 decimal places.
@@ -89,7 +43,6 @@ module GameStatable
     def percentage_ties
         ties_percent = total_ties / total_game_count
         ties_percent.round(2)
-
     end
     
     # iterates over the game
@@ -104,7 +57,6 @@ module GameStatable
         season_counts
     end
 
-average_goals_by_season
     # takes total games and uses a loop to find each value 
     # of total games. number gets converted into a float and 
     # rounds the average to eq 4.22
@@ -118,6 +70,12 @@ average_goals_by_season
 
         average = total_goals.to_f / total_games
         average.round(2)
+    end
+
+    # provides the average goals scored in a game across all seasons.
+    def average_goals_per_game
+        average_goals = total_goals.to_f / total_game_count.to_f
+        average_goals.round(2)
     end
 
     def average_goals_by_season
@@ -140,9 +98,56 @@ average_goals_by_season
                 average_goals_by_season[season] = average.round(2)
             end
         end
+    end
+
+
+    ####### Helper Methods ########
+
+    ## Returns the sum of home and away teams' goals
+    def total_score(game_data)
+        return game_data.away_goals + game_data.home_goals
+    end
+
+      # Counts all of the keys in the game_teams hash and divides them by 2
+    # Divides them by two because each game is entered twice with the team id 
+    # concatenated to the end of the game_id
+    # => Integer: 7441
+    def total_game_count
+        @game_teams.count / 2
+    end
+
+     # Counts all the key values in the game_teams hash comparing the hoa value to confirm
+    # it was a home game, and the result value to confirm it was a win and then converts the total
+    # count to a float.
+    # => Float: 3237.0
+    def total_home_wins
+        home_games = @game_teams.count do |game|
+            game[1].hoa == "home" && game[1].result == "WIN"
+        end.to_f
+        return home_games
+    end
+
+    # Counts all the key values in the game_teams hash comparing the hoa value to confirm
+    # it was a away game, and the result value to confirm it was a win and then converts the total
+    # count to a float.
+    # => Float: 2687.0
+    def total_visitor_wins
+        visitor_games = @game_teams.count do |game|
+            game[1].hoa == "away" && game[1].result == "WIN"
+        end.to_f
+        return visitor_games
+    end
       
-        average_goals_by_season
-        end
+    # Counts all the key values in the game_teams hash confirming that the result value is a tie.
+    # Divides the total by two because each game is entered twice with the team id 
+    # concatenated to the end of the game_id
+    # => Float: 1517.0
+    def total_ties
+        ties = @game_teams.count do |game|
+            game[1].result == "TIE"
+        end.to_f
+        ties /= 2
+    end
 
     #  Iterates over the games.csv file to confirm the total amount of goals from all games and seasons.
     def total_goals
@@ -152,10 +157,4 @@ average_goals_by_season
         end
         total_goals
     end
-    # provides the average goals scored in a game across all seasons.
-    def average_goals_per_game
-        average_goals = total_goals.to_f / total_game_count.to_f
-        average_goals.round(2)
-    end
-
 end
