@@ -52,6 +52,9 @@ Our code design approach was mostly encapsulated into our project design, althou
 # Retrospective
 
 ## Helpful Retro Tools
+Miro
+<br>
+[Purple Elephants Retrospective](https://miro.com/welcomeonboard/WnNyZGJPZnZoR0VUQ1J1UEVQZ2RDc3NIZGROZ1pJSlFoT0NwREFveE1LU0p4WklmRXZ1YjhDbzd3UEVnenJKRXwzNDU4NzY0NjA0NTMwNjIzMDE2fDI=?share_link_id=410946798732)
 
 ## Top 3 Things that Went During Our Project
 1.
