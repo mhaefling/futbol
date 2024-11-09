@@ -15,7 +15,7 @@ module Displayable
     season_hash_display(:count_of_games_by_season, "games")
     puts "Average Goals per Game: #{average_goals_per_game}"
     puts "Average Goals per Season: " 
-    season_hash_dispaly(:average_goals_per_season, "goals")
+    season_hash_display(:average_goals_by_season, "goals")
     puts "\n"
     puts "League Statistics"
     puts "-----------------"
