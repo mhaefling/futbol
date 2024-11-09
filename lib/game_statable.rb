@@ -98,6 +98,7 @@ module GameStatable
                 average_goals_by_season[season] = average.round(2)
             end
         end
+        average_goals_by_season
     end
 
 
