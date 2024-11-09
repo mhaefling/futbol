@@ -104,6 +104,46 @@ module GameStatable
         season_counts
     end
 
+average_goals_by_season
+    # takes total games and uses a loop to find each value 
+    # of total games. number gets converted into a float and 
+    # rounds the average to eq 4.22
+    def average_goals_per_game
+        total_goals = 0 
+        total_games = @games.length
+
+        @games.each_value do |game|
+            total_goals += game.away_goals + game.home_goals
+        end
+
+        average = total_goals.to_f / total_games
+        average.round(2)
+    end
+
+    def average_goals_by_season
+        goals_by_season = Hash.new { |hash, key| hash[key] = { total_goals: 0, total_games: 0 } }
+      
+        @games.each_value do |game|
+          season = game.season
+          goals_by_season[season][:total_goals] += game.away_goals + game.home_goals  # Accumulate goals
+          goals_by_season[season][:total_games] += 1  # Increment the game count
+        end
+      
+        # Calculates average goals per game for each season
+        # Checking to prevent division by zero - results w/o output error = to infinity
+        # Calculate the average for each season
+        # Round to 2 decimal places
+        average_goals_by_season = {}
+        goals_by_season.each do |season, data|
+            if data[:total_games] > 0  # Ensure we don't divide by zero
+                average = data[:total_goals].to_f / data[:total_games]
+                average_goals_by_season[season] = average.round(2)
+            end
+        end
+      
+        average_goals_by_season
+        end
+
     #  Iterates over the games.csv file to confirm the total amount of goals from all games and seasons.
     def total_goals
         total_goals = 0
@@ -117,4 +157,5 @@ module GameStatable
         average_goals = total_goals.to_f / total_game_count.to_f
         average_goals.round(2)
     end
+
 end
