@@ -60,17 +60,17 @@ module GameStatable
     # takes total games and uses a loop to find each value 
     # of total games. number gets converted into a float and 
     # rounds the average to eq 4.22
-    def average_goals_per_game
-        total_goals = 0 
-        total_games = @games.length
+    # def average_goals_per_game
+    #     total_goals = 0 
+    #     total_games = @games.length
 
-        @games.each_value do |game|
-            total_goals += game.away_goals + game.home_goals
-        end
+    #     @games.each_value do |game|
+    #         total_goals += game.away_goals + game.home_goals
+    #     end
 
-        average = total_goals.to_f / total_games
-        average.round(2)
-    end
+    #     average = total_goals.to_f / total_games
+    #     average.round(2)
+    # end
 
     # provides the average goals scored in a game across all seasons.
     def average_goals_per_game
