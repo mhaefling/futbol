@@ -1,6 +1,7 @@
-# Futbol
+# Futbol Project 
 Starter repository for the [Turing School](https://turing.edu/) Futbol project.
 
+## ***Iteration 1***
 ## Check-in Plan
 - scheduled 15 minute check-ins in the mornings
 - check-ins via slack or github comments before merging pull requests
@@ -39,3 +40,24 @@ Our code design approach was mostly encapsulated into our project design, althou
 > [LinkedIn Profile](http://www.linkedin.com/in/shadeau-shadow-christensen-32791b331)
 > <br>
 > [GitHub Profile](https://github.com/shadeauchristensen)
+
+<br>
+
+---
+---
+
+<br>
+
+## ***Iteration 3***
+# Retrospective
+
+## Helpful Retro Tools
+
+## Top 3 Things that Went During Our Project
+1.
+2.
+3.
+## Top 3 Things Our Team Would do Differently Next Time
+1.
+2.
+3.
