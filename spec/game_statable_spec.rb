@@ -86,13 +86,6 @@ RSpec.describe GameStatable do
 
     ####### Helper Method Tests ########
 
-    describe "#total_goal" do
-        it 'provides the total amount of goals from all games and seasons' do
-
-            expect(@stat_tracker.total_goals).to eq(31413)
-        end 
-    end
-
     describe "#total_score" do
         it 'returns the sum score of winning and lossing teams for a particular game' do
             game_data = @stat_tracker.games["2012030221"]
@@ -123,5 +116,12 @@ RSpec.describe GameStatable do
 
             expect(@stat_tracker.total_ties).to eq(1517.0)
         end
+    end
+
+    describe "#total_goal" do
+        it 'provides the total amount of goals from all games and seasons' do
+
+            expect(@stat_tracker.total_goals).to eq(31413)
+        end 
     end
 end
