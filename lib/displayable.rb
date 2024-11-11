@@ -50,5 +50,6 @@ module Displayable
     season_game_hash.each do |season, stat|
       puts "  #{season} | #{stat}"
     end
+    return true
   end
 end
