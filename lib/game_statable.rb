@@ -92,7 +92,7 @@ module GameStatable
 
     end
     
-    # iterates over the game
+    # makes an empty hash then iterates over the games hash to find the game
     def count_of_games_by_season
         season_counts = {} 
         

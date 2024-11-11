@@ -27,34 +27,26 @@ module LeagueStatable
         sum
     end
 
+    # calls the goals_by_team method which is a hash of team ids with how many goals theyve had
+    # then iterates over that hash to find the the team id with the max goals
+    # than finds the name of that team and returns it
     def best_offense 
-     team_goals = Hash.new { |hash, key| hash[key] = { total_goals: 0, games_played: 0}}
-
-     game_teams.each do |_, game_team|
-        team_goals[game_team.team_id][:total_goals] += game_team.goals
-        team_goals[game_team.team_id][:games_played] += 1
-     end
-
-     max_team_id, max_stats = team_goals.max_by { |_, stats| stats[:total_goals].to_f / stats[:games_played]}
-
-     team_name = teams[max_team_id].name
-
-     return "#{team_name}"
+        goals_by_team
+        max_team_goals = goals_by_team.max_by { |_, stats| stats[:total_goals].to_f / stats[:games_played] }
+        max_team_id = max_team_goals.first
+        team_name = teams[max_team_id].name
+        team_name
     end
 
+    # calls the goals_by_team method which is a hash of team ids with how many goals theyve had
+    # then iterates over that hash to find the the team id with the min goals
+    # than finds the name of that team and returns it
     def worst_offense
-        team_goals_2 = Hash.new { |hash, key| hash[key] = {total_goals: 0, games_played: 0}}
-
-        game_teams.each do |_, game_team|
-            team_goals_2[game_team.team_id][:total_goals] += game_team.goals
-            team_goals_2[game_team.team_id][:games_played] += 1
-        end
-
-        min_team_id, min_stats= team_goals_2.min_by { |_, stats| stats[:total_goals].to_f / stats[:games_played]}
-
+        goals_by_team
+        min_team_goals = goals_by_team.min_by { |_, stats| stats[:total_goals].to_f / stats[:games_played] }
+        min_team_id = min_team_goals.first
         team_name_2 = teams[min_team_id].name
-
-        return "#{team_name_2}"
+        team_name_2
     end
 
     def average_score_hoa(team_id, hoa)
@@ -102,6 +94,19 @@ module LeagueStatable
         unique_team_count = team_ids.uniq.count
         unique_team_count  # Return the count as an integer
     end
+
+    # method to make a hash with team ids and how many goals they have made over all seasons
+    def goals_by_team
+        team_goals = Hash.new { |hash, key| hash[key] = { total_goals: 0, games_played: 0}}
+
+        game_teams.each do |_, game_team|
+            team_goals[game_team.team_id][:total_goals] += game_team.goals
+            team_goals[game_team.team_id][:games_played] += 1
+        end
+        team_goals
+    end
 end
+
+
 
 
