@@ -13,7 +13,6 @@ RSpec.describe SeasonStatable do
         }
         
         @stat_tracker = StatTracker.from_csv(locations)
-        @stat_tracker.extend(GameStatable)
     end
 
     describe "winnigest_coach" do
