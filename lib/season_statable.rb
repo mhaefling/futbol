@@ -152,4 +152,73 @@ module SeasonStatable
             team[1]
         end[0]
     end
+
+    def most_accurate_team(season)
+        team_id = best_ratio(team_ratios(team_season_shot_goals(games_by_season(season))))
+        return team_name_from_id(team_id)
+    end
+
+    def least_accurate_team(season)
+        team_id = worst_ratio(team_ratios(team_season_shot_goals(games_by_season(season))))
+        return team_name_from_id(team_id)
+    end
+
+    #this method looks over all the games a coach has had and gets there win percentage by the season passed in
+    #uses the game_by_season to get a hash of game ids in each season and makes two new hashes
+    #then uses the coach_wins_by_season helper method to get how many wins each coach has per season
+    #then class the coach_win_percentage_calculator method to take those wins and turn them into a percentage in a hash
+    #then whoever has the highest percentage in that hash is displayed
+    def winningest_coach(season)
+      season_games = games_by_season(season)
+      coach_wins = Hash.new(0)
+      total_coach_game = Hash.new(0)
+      coach_wins_in_season(season_games, coach_wins, total_coach_game)
+      coach_win_percentages = coach_win_percentage_calculator(coach_wins, total_coach_game)
+      coach_win_percentages.max_by { |coach, win_percentage| win_percentage}.first
+    end
+    #this method looks over all the games a coach has had and gets there win percentage by the season passed in
+    #uses the game_by_season to get a hash of game ids in each season and makes two new hashes
+    #then uses the coach_wins_by_season helper method to get how many wins each coach has per season
+    #then class the coach_win_percentage_calculator method to take those wins and turn them into a percentage in a hash
+    #then whoever has the lowest percentage in that hash is displayed
+    def worst_coach(season)
+      season_games = games_by_season(season)
+      coach_wins = Hash.new(0)
+      total_coach_game = Hash.new(0)
+      coach_wins_in_season(season_games, coach_wins, total_coach_game)
+      coach_win_percentages = coach_win_percentage_calculator(coach_wins, total_coach_game)
+      coach_win_percentages.min_by { |coach, win_percentage| win_percentage}.first
+    end
+
+    #this helper method takes the game ids of each season adds the ids and assigns them to a heah coach
+    #then iterates over to see how many wins they have and dosent add if there is a loss or tie
+    #then in a hash gives the head coach and how many wins they have
+    def coach_wins_in_season(season_games, coach_wins, total_coach_game)
+
+      season_games.each do |game_id|
+
+        coach_team = @game_teams.select { |game_team_id, game_team| game_team.game_id == game_id}
+
+        coach_team.each do |game_team_id, game_team|
+          total_coach_game[game_team.head_coach] += 1
+          
+          if game_team.result == 'WIN'
+            coach_wins[game_team.head_coach] += 1
+          else
+            coach_wins[game_team.head_coach] += 0
+          end
+        end
+        
+      end
+
+    end
+    #then takes the hash coach_wins from coach_wins_in season and takes the number of wins over the number of games and turns them into a percentage
+    #then takes those percentages and makes them into a hash
+    def coach_win_percentage_calculator(coach_wins, total_coach_game)
+      coach_wins.map do |coach, wins|
+        total_games = total_coach_game[coach]
+        win_percentage = (wins.to_f / total_games) * 100
+        [coach, win_percentage]
+      end.to_h
+    end
 end
