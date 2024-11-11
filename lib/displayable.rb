@@ -38,6 +38,7 @@ module Displayable
     puts "Least Accurate Team: #{least_accurate_team(test_season)}"
     puts "Team with Most Tackles: #{most_tackles(test_season)}"
     puts "Team with Fewest Tackles: #{fewest_tackles(test_season)}"
+    return true
   end
 
   # Helper method to iterate through the hash of number of game sper season
@@ -49,5 +50,6 @@ module Displayable
     season_game_hash.each do |season, stat|
       puts "  #{season} | #{stat}"
     end
+    return true
   end
 end
