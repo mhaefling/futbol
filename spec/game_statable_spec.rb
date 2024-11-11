@@ -13,7 +13,6 @@ RSpec.describe GameStatable do
         }
         
         @stat_tracker = StatTracker.from_csv(locations)
-        @stat_tracker.extend(GameStatable)
     end
 
     describe "#highest_total_score" do
