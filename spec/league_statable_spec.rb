@@ -13,7 +13,6 @@ RSpec.describe LeagueStatable do
         }
         
         @stat_tracker = StatTracker.from_csv(locations)
-        @stat_tracker.extend(GameStatable)
     end
 
     describe '#count_of_teams' do
