@@ -25,7 +25,7 @@ module GameStatable
     # value down to 2 decimal places.
     # => Float: 0.44
     def percentage_home_wins
-        home_wins_percent = total_home_wins / total_game_count
+        home_wins_percent = total_wins_hoa('home') / total_game_count
         home_wins_percent.round(2)
     end
 
@@ -34,7 +34,7 @@ module GameStatable
     # value down to 2 decimal places.
     # => Float: 0.36
     def percentage_visitor_wins
-        visitor_wins_percent = total_visitor_wins / total_game_count
+        visitor_wins_percent = total_wins_hoa("away") / total_game_count
         visitor_wins_percent.round(2)
     end
 
@@ -56,21 +56,6 @@ module GameStatable
         end
         season_counts
     end
-
-    # takes total games and uses a loop to find each value 
-    # of total games. number gets converted into a float and 
-    # rounds the average to eq 4.22
-    # def average_goals_per_game
-    #     total_goals = 0 
-    #     total_games = @games.length
-
-    #     @games.each_value do |game|
-    #         total_goals += game.away_goals + game.home_goals
-    #     end
-
-    #     average = total_goals.to_f / total_games
-    #     average.round(2)
-    # end
 
     # provides the average goals scored in a game across all seasons.
     def average_goals_per_game
@@ -101,10 +86,9 @@ module GameStatable
         average_goals_by_season
     end
 
-
     ####### Helper Methods ########
 
-    ## Returns the sum of home and away teams' goals
+    ## Returns the sum of home and away teams' goals for one game
     def total_score(game_data)
         return game_data.away_goals + game_data.home_goals
     end
@@ -117,26 +101,16 @@ module GameStatable
         @game_teams.count / 2
     end
 
-     # Counts all the key values in the game_teams hash comparing the hoa value to confirm
-    # it was a home game, and the result value to confirm it was a win and then converts the total
+    # Counts all the key values in the game_teams hash comparing the hoa value to confirm
+    # it was a home or away game, and the result value to confirm it was a win and then converts the total
     # count to a float.
     # => Float: 3237.0
-    def total_home_wins
-        home_games = @game_teams.count do |game|
-            game[1].hoa == "home" && game[1].result == "WIN"
-        end.to_f
-        return home_games
-    end
-
-    # Counts all the key values in the game_teams hash comparing the hoa value to confirm
-    # it was a away game, and the result value to confirm it was a win and then converts the total
-    # count to a float.
     # => Float: 2687.0
-    def total_visitor_wins
-        visitor_games = @game_teams.count do |game|
-            game[1].hoa == "away" && game[1].result == "WIN"
+    def total_wins_hoa(hoa)
+        games = @game_teams.count do |game|
+            game[1].hoa == hoa && game[1].result == "WIN"
         end.to_f
-        return visitor_games
+        return games
     end
       
     # Counts all the key values in the game_teams hash confirming that the result value is a tie.

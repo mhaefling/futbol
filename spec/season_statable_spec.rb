@@ -20,7 +20,6 @@ RSpec.describe SeasonStatable do
         it "returns the head_coach with the most wins per that season" do
             expect(@stat_tracker.winningest_coach("20132014")).to eq ("Claude Julien")
             expect(@stat_tracker.winningest_coach("20142015")).to eq ("Alain Vigneault")
-        
         end
     end
 
@@ -87,6 +86,15 @@ RSpec.describe SeasonStatable do
         end
     end
 
+    describe "#games_by_season" do
+        it 'returns an array of game ids based on a season id' do
+            season = "20132014"
+            expect(@stat_tracker.games_by_season(season)).to be_a(Array)
+            expect(@stat_tracker.games_by_season(season)).to_not be_empty
+            expect(@stat_tracker.games_by_season(season)).to be_all(String)
+        end
+    end 
+
     describe "#team_season_shot_goals" do
         it 'returns a hash of each teams total shots and goals for a given season' do
             season_games = ["2013030161", "2013030162", "2013030163", "2013030164", "2013030165", "2013030166", "2013030151", "2013030152", "2013030153", "2013030154"]
@@ -115,12 +123,5 @@ RSpec.describe SeasonStatable do
         end
     end
 
-    describe "#games_by_season" do
-        it 'returns an array of game ids based on a season id' do
-            season = "20132014"
-            expect(@stat_tracker.games_by_season(season)).to be_a(Array)
-            expect(@stat_tracker.games_by_season(season)).to_not be_empty
-            expect(@stat_tracker.games_by_season(season)).to be_all(String)
-        end
-    end 
+ 
 end

@@ -28,8 +28,6 @@ RSpec.describe GameStatable do
         end
     end
 
-   
-
     describe '#percentage_home_wins' do
         it 'calculates the percentage of home wins' do
             expect(@stat_tracker.percentage_home_wins).to eq(0.44)
@@ -51,27 +49,24 @@ RSpec.describe GameStatable do
     end
 
     describe "#count_of_games_by_season" do
-        expected = {
-            "20122013"=>806,
-            "20162017"=>1317,
-            "20142015"=>1319,
-            "20152016"=>1321,
-            "20132014"=>1323,
-            "20172018"=>1355
-        }
+        it 'can return count of games by season' do
+            expected = {
+                "20122013"=>806,
+                "20162017"=>1317,
+                "20142015"=>1319,
+                "20152016"=>1321,
+                "20132014"=>1323,
+                "20172018"=>1355
+            }
 
+            expect(@stat_tracker.count_of_games_by_season).to eq(expected)
+        end
     end
 
     describe "#average_goals_per_game" do
         it 'Average number of goals scored in a game across all seasons including both home and away goals' do
 
             expect(@stat_tracker.average_goals_per_game).to eq(4.22)
-        end
-    end
-
-    describe '#average_goals_per_game' do
-        it 'calculates average goals for game' do
-            expect(@stat_tracker.average_goals_per_game).to eq 4.22
         end
     end
 
@@ -91,15 +86,8 @@ RSpec.describe GameStatable do
 
     ####### Helper Method Tests ########
 
-    describe "#total_goal" do
-        it 'provides the total amount of goals from all games and seasons' do
-
-            expect(@stat_tracker.total_goals).to eq(31413)
-        end 
-    end
-
     describe "#total_score" do
-        it 'returns the sum score of winning and lossing teams' do
+        it 'returns the sum score of winning and lossing teams for a particular game' do
             game_data = @stat_tracker.games["2012030221"]
 
             expect(@stat_tracker.total_score(game_data)).to eq(5)
@@ -113,17 +101,13 @@ RSpec.describe GameStatable do
         end
     end
 
-    describe "#total_home_wins" do
-    it 'returns the total home game wins' do
+    describe "#total_wins_hoa" do
+        it 'returns the total home game wins' do
+            expect(@stat_tracker.total_wins_hoa('home')).to eq(3237.0)
+        end
 
-        expect(@stat_tracker.total_home_wins).to eq(3237.0)
-    end
-    end
-
-    describe "#total_visitor_wins" do
         it 'returns the total away game wins' do
-
-            expect(@stat_tracker.total_visitor_wins).to eq(2687.0)
+            expect(@stat_tracker.total_wins_hoa('away')).to eq(2687.0)
         end
     end
 
@@ -132,5 +116,12 @@ RSpec.describe GameStatable do
 
             expect(@stat_tracker.total_ties).to eq(1517.0)
         end
+    end
+
+    describe "#total_goal" do
+        it 'provides the total amount of goals from all games and seasons' do
+
+            expect(@stat_tracker.total_goals).to eq(31413)
+        end 
     end
 end

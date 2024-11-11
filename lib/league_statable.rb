@@ -59,15 +59,7 @@ module LeagueStatable
  
     ####### Helper Methods ########
 
-    def games_per_team
-        team_count = Hash.new(0)
-        @games.each do |game|
-            team_count[game[1].away_team] += 1
-        end
-    end
-
     def total_games_per_team_hoa(team_id, hoa)
-        
         total = @game_teams.count do |id, game_team|
             game_team.team_id == team_id && game_team.hoa == hoa
         end
@@ -103,5 +95,3 @@ module LeagueStatable
         return lowest.name
     end
 end
-
-
