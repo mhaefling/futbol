@@ -18,11 +18,21 @@ module SeasonStatable
         coach_win_percentages.min_by { |coach, win_percentage| win_percentage}.first
     end
 
+    # Returns the most accurate team, but taking its season argument and running it through many helper methods starting with:
+    # 1. games_by_season, to return an array of all game_id's for that specific season.
+    # 2. it then runs those game_ids through team_season_shot_goals method to create a hash of all teams_ids as the key, and their total shots and goals for the season stored in an array
+    # 3. it then takes that hash and runs it through the team_ratios method which calculates each teams ratio by dividing the goals by shots in each teams array
+    # 4. it then runs that team_ratios hash through the best_ratio method to sort the best ratio to the top and pull out the team_id.
     def most_accurate_team(season)
         team_id = best_ratio(team_ratios(team_season_shot_goals(games_by_season(season))))
         return team_name_from_id(team_id)
     end
 
+    # Returns the least accurate team, but taking its season argument and running it through many helper methods starting with:
+    # 1. games_by_season, to return an array of all game_id's for that specific season.
+    # 2. it then runs those game_ids through team_season_shot_goals method to create a hash of all teams_ids as the key, and their total shots and goals for the season stored in an array
+    # 3. it then takes that hash and runs it through the team_ratios method which calculates each teams ratio by dividing the goals by shots in each teams array
+    # 4. it then runs that team_ratios hash through the worst_ratio method to sort the worst ratio to the top and pull out the team_id.
     def least_accurate_team(season)
         team_id = worst_ratio(team_ratios(team_season_shot_goals(games_by_season(season))))
         return team_name_from_id(team_id)
@@ -141,12 +151,14 @@ module SeasonStatable
         tackles_by_team
     end
 
+    # Sorts the team_ratios hash by max so that the best ratio is first and returns just the team_id element
     def best_ratio(team_ratios)
         team_ratios.max_by do |team|
             team[1]
         end[0]
     end
 
+    # Sorts the team_ratios hash by min so that the worst ratio is first and returns just the team_id element
     def worst_ratio(team_ratios)
         team_ratios.min_by do |team|
             team[1]
