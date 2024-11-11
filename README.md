@@ -56,11 +56,11 @@ Miro
 <br>
 [Purple Elephants Retrospective](https://miro.com/welcomeonboard/WnNyZGJPZnZoR0VUQ1J1UEVQZ2RDc3NIZGROZ1pJSlFoT0NwREFveE1LU0p4WklmRXZ1YjhDbzd3UEVnenJKRXwzNDU4NzY0NjA0NTMwNjIzMDE2fDI=?share_link_id=410946798732)
 
-## Top 3 Things that Went During Our Project
-1.
-2.
-3.
+## Top 3 Things that Went Well During Our Project
+1. Communication!!! Finding common ground!!! Teamwork!!!
+2. Using GitHub Project to organize our tasks!!!
+3. Celebrating the small victories!!!
 ## Top 3 Things Our Team Would do Differently Next Time
-1.
-2.
-3.
+1. Set up file structure from the get go
+2. Writing documentation as methods are made
+3. Delegate methods in logically sets
