@@ -56,6 +56,54 @@ RSpec.describe SeasonStatable do
             expect(@stat_tracker.fewest_tackles("20142015")).to eq "Orlando City SC"
         end
     end
+
+    describe '#find_team_with_most_tackles' do
+        it 'returns the team_id of the team with the most tackles' do
+            season_id = '20122013'
+            tackles_by_team = @stat_tracker.calculate_tackles(season_id)
+            team_with_most_tackles = @stat_tracker.find_team_with_most_tackles(tackles_by_team)
+
+            expect(team_with_most_tackles).to be_a(String)
+            expect(tackles_by_team[team_with_most_tackles]).to eq tackles_by_team.values.max
+        end
+    end
+
+    describe '#find_team_with_fewest_tackles' do
+        it 'returns the team_id of the team with the fewest tackles' do
+            season_id = '20122013'
+            tackles_by_team = @stat_tracker.calculate_tackles(season_id)
+            team_with_fewest_tackles = @stat_tracker.find_team_with_fewest_tackles(tackles_by_team)
+
+            expect(team_with_fewest_tackles).to be_a(String)
+            expect(tackles_by_team[team_with_fewest_tackles]).to eq tackles_by_team.values.min
+        end
+    end
+
+    describe '#team_name_from_id' do
+        it 'returns the team name corresponding to a given team_id' do
+            team_id = '1'
+            team_name = @stat_tracker.team_name_from_id(team_id)
+        
+            expect(team_name).to be_a(String)
+            expect(team_name).to eq('Atlanta United')  # Check against the expected name directly
+        end
+    end
+
+    describe '#calculate_tackles' do
+        it 'calculates the total tackles for each team in a given season' do
+        season_id = '20122013'
+        tackles_by_team = @stat_tracker.calculate_tackles(season_id)
+
+            expect(tackles_by_team).to be_a(Hash)
+            tackles_by_team.keys.each do |key|
+                expect(key).to be_a(String)
+            end
+            
+            tackles_by_team.values.each do |value|
+                expect(value).to be_a(Integer)
+            end
+        end
+    end
    
     
     ###### Helper Method Tests ########
