@@ -24,8 +24,8 @@ RSpec.describe SeasonStatable do
 
     describe "worst_coach" do
         it "returns the head coach with the most losses per season" do
-        expect(@stat_tracker.worst_coach("20132014")).to eq ("Peter Laviolette")
-        expect(@stat_tracker.worst_coach("20142015")).to eq("Craig MacTavish").or(eq("Ted Nolan"))
+            expect(@stat_tracker.worst_coach("20132014")).to eq ("Peter Laviolette")
+            expect(@stat_tracker.worst_coach("20142015")).to eq("Craig MacTavish").or(eq("Ted Nolan"))
         end
     end
 
@@ -57,7 +57,35 @@ RSpec.describe SeasonStatable do
         end
     end
 
-    describe '#find_team_with_most_tackles' do
+  
+    ###### Helper Method Tests ########
+
+    describe "coach_wins_in_season" do
+        it "returns number of wins for a coach in a season" do
+            season_games = @stat_tracker.games_by_season("20132014")
+            coach_wins = Hash.new(0)
+            total_coach_game = Hash.new(0)
+            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game)).to be_an(Array)
+            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game).size).to eq(1323)
+            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game).sample).to be_a(String)
+            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game).sample.length).to eq(10)
+        end
+    end
+
+    describe "coach_win_percentage_calculator" do
+        it "calculates the win percentage a coach has and puts the in an array" do
+            season_games = @stat_tracker.games_by_season("20132014")
+            coach_wins = Hash.new(0)
+            total_coach_game = Hash.new(0)
+            @stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game)
+            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game)).to be_a(Hash)
+            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).size).to eq(34)
+            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).keys.sample).to be_a(String)
+            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).values.sample).to be_a(Float)
+        end
+    end
+
+      describe '#find_team_with_most_tackles' do
         it 'returns the team_id of the team with the most tackles' do
             season_id = '20122013'
             tackles_by_team = @stat_tracker.calculate_tackles(season_id)
@@ -105,34 +133,6 @@ RSpec.describe SeasonStatable do
         end
     end
    
-    
-    ###### Helper Method Tests ########
-
-    describe "coach_wins_in_season" do
-        it "returns number of wins for a coach in a season" do
-            season_games = @stat_tracker.games_by_season("20132014")
-            coach_wins = Hash.new(0)
-            total_coach_game = Hash.new(0)
-            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game)).to be_an(Array)
-            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game).size).to eq(1323)
-            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game).sample).to be_a(String)
-            expect(@stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game).sample.length).to eq(10)
-        end
-    end
-
-    describe "coach_win_percentage_calculator" do
-        it "calculates the win percentage a coach has and puts the in an array" do
-            season_games = @stat_tracker.games_by_season("20132014")
-            coach_wins = Hash.new(0)
-            total_coach_game = Hash.new(0)
-            @stat_tracker.coach_wins_in_season(season_games, coach_wins, total_coach_game)
-            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game)).to be_a(Hash)
-            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).size).to eq(34)
-            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).keys.sample).to be_a(String)
-            expect(@stat_tracker.coach_win_percentage_calculator(coach_wins, total_coach_game).values.sample).to be_a(Float)
-        end
-    end
-
     describe "#games_by_season" do
         it 'returns an array of game ids based on a season id' do
             season = "20132014"
