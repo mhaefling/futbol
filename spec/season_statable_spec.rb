@@ -24,8 +24,8 @@ RSpec.describe SeasonStatable do
 
     describe "worst_coach" do
         it "returns the head coach with the most losses per season" do
-        expect(@stat_tracker.worst_coach("20132014")).to eq ("Peter Laviolette")
-        expect(@stat_tracker.worst_coach("20142015")).to eq("Craig MacTavish").or(eq("Ted Nolan"))
+            expect(@stat_tracker.worst_coach("20132014")).to eq ("Peter Laviolette")
+            expect(@stat_tracker.worst_coach("20142015")).to eq("Craig MacTavish").or(eq("Ted Nolan"))
         end
     end
 
@@ -58,7 +58,6 @@ RSpec.describe SeasonStatable do
     end
 
   
-    
     ###### Helper Method Tests ########
 
     describe "coach_wins_in_season" do
@@ -86,7 +85,7 @@ RSpec.describe SeasonStatable do
         end
     end
 
-    describe '#find_team_with_most_tackles' do
+      describe '#find_team_with_most_tackles' do
         it 'returns the team_id of the team with the most tackles' do
             season_id = '20122013'
             tackles_by_team = @stat_tracker.calculate_tackles(season_id)
@@ -133,7 +132,7 @@ RSpec.describe SeasonStatable do
             end
         end
     end
-
+   
     describe "#games_by_season" do
         it 'returns an array of game ids based on a season id' do
             season = "20132014"

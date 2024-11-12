@@ -24,7 +24,7 @@ module SeasonStatable
     # 3. it then takes that hash and runs it through the team_ratios method which calculates each teams ratio by dividing the goals by shots in each teams array
     # 4. it then runs that team_ratios hash through the best_ratio method to sort the best ratio to the top and pull out the team_id.
     def most_accurate_team(season)
-        team_id = best_ratio(team_ratios(team_season_shot_goals(games_by_season(season))))
+        team_id = best_ratio(team_ratios(team_season_shot_goals(games_by_season(season)))) 
         return team_name_from_id(team_id)
     end
 
